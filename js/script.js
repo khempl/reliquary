@@ -36,27 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
     resultsBlock.style.display = 'none';
     mainEl.appendChild(resultsBlock);
 
-    function addCartButtonListeners(container) {
-        container.querySelectorAll('article button').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const article = this.closest('article');
-                const name = article.dataset.name || article.querySelector('.center:first-child')?.textContent.trim() || 'Товар';
-                const price = parseInt(article.dataset.price) || 0;
-                const img = article.querySelector('img')?.src || '';
-                
-                if (window.addToCart) {
-                    window.addToCart(name, price, img);
-                } else {
-                    console.log('Добавлено в корзину:', name, price, img);
-                    alert(`✓ ${name} добавлен в корзину`);
-                }
-            });
-        });
-    }
-
     function doSearch() {
         const query = searchInput.value.toLowerCase().trim();
         
@@ -92,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const clone = item.cloneNode(true);
                 resultsSection.appendChild(clone);
             });
-            addCartButtonListeners(resultsSection);
         }
     }
 
@@ -119,5 +97,4 @@ document.addEventListener('DOMContentLoaded', function () {
             doSearch();
         }
     });
-    addCartButtonListeners(document);
 });
