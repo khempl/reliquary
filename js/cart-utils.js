@@ -43,14 +43,34 @@ function showToast(msg) {
     toast._timer = setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
+function getProductName(article) {
+    // 1. data-name
+    if (article.dataset.name) return article.dataset.name;
+    // 2. текст первого .center
+    const center = article.querySelector('.center:first-child');
+    if (center) return center.textContent.trim();
+    // 3. ссылка внутри
+    const link = article.querySelector('a');
+    if (link) return link.textContent.trim();
+    // 4. запасной вариант
+    return 'Товар';
+}
+
+function getProductPrice(article) {
+    const priceEl = article.querySelector('.price');
+    if (!priceEl) return 0;
+    const text = priceEl.cloneNode(true);
+    const s = text.querySelector('s');
+    if (s) s.remove();
+    return parseInt(text.textContent.replace(/\D/g, '')) || 0;
+}
+
 //вешаем обработчики на все кнопки "добавить в корзину"
 document.addEventListener('DOMContentLoaded', function () {
 
     //добавляем бейдж к ссылке корзины
-    const cartLink = document.querySelector('.nav a[href="cart.html"], .nav a[href="#"]:last-child');
+    const cartLink = document.querySelector('.nav a[href="cart.html"]');
     if (cartLink) {
-        cartLink.href = 'cart.html';
-
         const badge = document.createElement('span');
         badge.id = 'cart-badge';
         cartLink.appendChild(badge);
@@ -60,28 +80,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // обработчики кнопок на карточках
     document.querySelectorAll('article button').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            const article = btn.closest('article');
-            const name = article.querySelector('a') ? article.querySelector('a').textContent.trim() : 'Товар';
-            const img = article.querySelector('img') ? article.querySelector('img').src : '';
-            const priceEl = article.querySelector('.price');
-            let price = 0;
-            if (priceEl) {
-                // берём цену без зачёркнутой
-                const text = priceEl.cloneNode(true);
-                const s = text.querySelector('s');
-                if (s) s.remove();
-                price = parseInt(text.textContent.replace(/\D/g, '')) || 0;
-            }
-            addToCart(name, price, img);
-        });
-    });
-
-
-    document.querySelectorAll('article button').forEach(btn => {
         btn.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
+            
+            const article = btn.closest('article');
+            const name = getProductName(article);
+            const img = article.querySelector('img') ? article.querySelector('img').src : '';
+            const price = getProductPrice(article);
+            
+            addToCart(name, price, img);
         });
     });
 
