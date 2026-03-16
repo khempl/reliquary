@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(() => preloader.style.display = 'none', 100);
     }
     preloader.addEventListener('click', hidePreloader);
-    setTimeout(hidePreloader, 2300);
+    setTimeout(hidePreloader, 2360);
 
     const track = document.querySelector('.carousel-track');
     if (track) track.innerHTML = track.innerHTML + track.innerHTML;
