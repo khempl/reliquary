@@ -383,7 +383,7 @@ a.contact-value:hover {color:#fff;}
 .btn-more:hover {background:var(--red);color:#fff;box-shadow:0 0 25px var(--red);transform:translateY(-2px);}
 
 .login-wrap {display:flex;align-items:center;justify-content:center;min-height:60vh;padding:40px 20px;flex-direction:column;}
-.login-card {background:var(--bg-card);border:var(--border-red);border-radius:var(--radius);padding:50px 45px;max-width:440px;width:100%;box-shadow:0 0 40px rgba(112,0,0,0.4);text-align:center;}
+.login-card {display:flex;flex-direction:column;background:var(--bg-card);border:var(--border-red);border-radius:var(--radius);padding:50px 45px;max-width:440px;width:100%;box-shadow:0 0 40px rgba(112,0,0,0.4);text-align:center;}
 .login-card h2 {margin-bottom:12px;}
 .login-sub {color:var(--grey);font-size:20px;margin-bottom:30px;line-height:1.5;}
 .login-note {color:rgba(180,180,180,0.5);font-size:16px;margin-top:15px;}
